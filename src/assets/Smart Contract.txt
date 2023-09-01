@@ -1,0 +1,45 @@
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity ^0.8.7;
+
+import "@openzeppelin/contracts/utils/Strings.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
+
+contract Bintec_Place is AccessControl {
+    string[30][30] private _pixels;
+    mapping(address => uint256) private _times;
+    bytes32 public constant EDITOR_ROLE = keccak256("EDITOR_ROLE");
+
+    constructor() {
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+    }
+
+    function setPixelColor( uint256 x,uint256 y,string memory color ) public {
+        require(_times[msg.sender] + 300 < block.timestamp, "Espera...");
+        _pixels[x][y] = color;
+        _times[msg.sender] = block.timestamp;
+    }
+
+    function getPixelColor(uint256 x, uint256 y) public view returns (string memory){
+        return _pixels[x][y];
+    }
+
+    function getTime() public view returns (uint256) {
+        return _times[msg.sender];
+    }
+
+    function setPixelColorAdmin( uint256 x, uint256 y, string memory color ) public onlyRole(EDITOR_ROLE) {
+        _pixels[x][y] = color;
+    }
+
+    function clearAllPixels() public onlyRole(EDITOR_ROLE) {
+        for (uint256 i = 0; i < _pixels.length; i++) {
+            for (uint256 j = 0; j < _pixels[i].length; j++) {
+            _pixels[i][j] = '0xFFFFFF';
+        }
+        }
+    }
+
+    function getAllPixelsPerRow(uint row) public view returns (string[30] memory) {
+       return _pixels[row];
+    }
+}
