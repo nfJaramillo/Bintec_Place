@@ -60,14 +60,21 @@ const theme = createTheme({
     fontFamily: 'Nunito',
   },
   palette: {
-    yellow: createColor('#FCDB25'),
+    black2: createColor('#2c2a29'),
+    white2: createColor('#ffffff'),
+    yellow: createColor('#ffd204'),
+    green: createColor('#00c587'),
+    orange: createColor('#ff803a'),
+    purple: createColor('#9f62d2'),
+    pink: createColor('#ffb8d2'),
+    blue: createColor('#01cdeb'),  
     primary: {
-      main: '#2A2625',
-      darker: '#FFDB00',
+      main: '#2c2a29',
+      darker: '#ffd204',
     },
     neutral: {
-      main: 'FFFFFF',
-      contrastText: '#FF8120',
+      main: 'f7f7f7',
+      contrastText: '#2c2a29',
     },
   },
   
