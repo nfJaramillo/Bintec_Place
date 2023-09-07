@@ -2,14 +2,13 @@ import { Grid, Button, Fab, Box } from "@mui/material"
 import { useEffect, useState } from "react"
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import CheckIcon from '@mui/icons-material/Check';
-import { getAllPixelsPerRow } from "../utils/interact";
+import { getAllPixels, setPixelColor } from "../utils/interact";
 
 const Canvas = () => {
 
 
     const rows = 30
     const columns = 50
-    var pixelsTemp = []
     const [selectedIndex, setSelectedIndex] = useState(-1)
     const [selectedSubIndex, setSelectedSubIndex] = useState(-1)
     const [selectedColor, setSelectedColor] = useState(-1)
@@ -30,7 +29,7 @@ const Canvas = () => {
 
     useEffect(() => {
         async function fetchData() {
-            setPixels(await getAllPixelsPerRow())
+            setPixels(await getAllPixels())
 
         }
         fetchData()
@@ -43,12 +42,8 @@ const Canvas = () => {
 
     }
 
-    const handleConfirmation = () => {
-        pixelsTemp = pixels
-        console.log(pixelsTemp)
-        pixelsTemp[selectedIndex][selectedSubIndex] = selectedColor
-        setPixels([...pixelsTemp])
-
+    const handleConfirmation = async () => {
+         setPixelColor(selectedIndex, selectedSubIndex, selectedColor)
     }
 
 
