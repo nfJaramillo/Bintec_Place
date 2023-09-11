@@ -1,12 +1,13 @@
 import { Grid, Button, Fab, Box } from "@mui/material"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import CheckIcon from '@mui/icons-material/Check';
 import { getAllPixels, setPixelColor } from "../utils/interact";
+import { AppContext } from '../App.jsx';
 
 const Canvas = () => {
 
-
+    const contextData = useContext(AppContext);
     const rows = 30
     const columns = 50
     const [selectedIndex, setSelectedIndex] = useState(-1)
@@ -43,7 +44,10 @@ const Canvas = () => {
     }
 
     const handleConfirmation = async () => {
-         setPixelColor(selectedIndex, selectedSubIndex, selectedColor)
+        let response = await setPixelColor(selectedIndex, selectedSubIndex, selectedColor)
+        contextData.severity(response.severity)
+        contextData.text(response.status);
+        contextData.show(true)
     }
 
 
@@ -57,7 +61,7 @@ const Canvas = () => {
                         <Grid container direction='column' height={{ xs: '50vh', md: '80vh' }}>
                             {pixels.map((items, index) => {
                                 return (
-                                    <Grid item key={index}  height={{ xs: '0.7vh', md: '2.5vh' }}>
+                                    <Grid item key={index} height={{ xs: '0.7vh', md: '2.5vh' }}>
                                         {items.map((pixelColor, sIndex) => {
                                             return (
                                                 <Button onClick={() => handlePixelClick(index, sIndex)} key={sIndex} sx={{ border: index === selectedIndex && sIndex === selectedSubIndex ? 1 : 0, padding: 0, minWidth: { xs: '0.7vh', md: '2.5vh' }, minHeight: { xs: '0.7vh', md: '2.5vh' }, backgroundColor: Colors[pixelColor], borderRadius: 0, '&:hover': { border: 1, backgroundColor: Colors[pixelColor] } }}>
@@ -78,18 +82,18 @@ const Canvas = () => {
                 <Grid container sx={{ justifyContent: 'center' }} spacing={1}>
                     <Grid item xs={12}>
                         <Box textAlign='center'>
-                            <Fab color="black2" onClick={() => setSelectedColor(1)} sx={{height: { xs: '8vh'}, width: { xs: '8vh'},border: 1 === selectedColor ? 2 : 0 }}></Fab>
-                            <Fab color="white2" onClick={() => setSelectedColor(2)} sx={{height: { xs: '8vh'}, width: { xs: '8vh'}, border: 2 === selectedColor ? 2 : 0 }}></Fab>
-                            <Fab color="yellow" onClick={() => setSelectedColor(3)} sx={{height: { xs: '8vh'}, width: { xs: '8vh'}, border: 3 === selectedColor ? 2 : 0 }}></Fab>
-                            <Fab color="green" onClick={() => setSelectedColor(4)} sx={{height: { xs: '8vh'}, width: { xs: '8vh'}, border: 4 === selectedColor ? 2 : 0 }} ></Fab>
+                            <Fab color="black2" onClick={() => setSelectedColor(1)} sx={{ height: { xs: '8vh' }, width: { xs: '8vh' }, border: 1 === selectedColor ? 2 : 0 }}></Fab>
+                            <Fab color="white2" onClick={() => setSelectedColor(2)} sx={{ height: { xs: '8vh' }, width: { xs: '8vh' }, border: 2 === selectedColor ? 2 : 0 }}></Fab>
+                            <Fab color="yellow" onClick={() => setSelectedColor(3)} sx={{ height: { xs: '8vh' }, width: { xs: '8vh' }, border: 3 === selectedColor ? 2 : 0 }}></Fab>
+                            <Fab color="green" onClick={() => setSelectedColor(4)} sx={{ height: { xs: '8vh' }, width: { xs: '8vh' }, border: 4 === selectedColor ? 2 : 0 }} ></Fab>
                         </Box>
                     </Grid>
                     <Grid item xs={12}>
                         <Box textAlign='center'>
-                            <Fab color="orange" onClick={() => setSelectedColor(5)} sx={{height: { xs: '8vh'}, width: { xs: '8vh'}, border: 5 === selectedColor ? 2 : 0 }}></Fab>
-                            <Fab color="purple" onClick={() => setSelectedColor(6)} sx={{height: { xs: '8vh'}, width: { xs: '8vh'}, border: 6 === selectedColor ? 2 : 0 }}></Fab>
-                            <Fab color="pink" onClick={() => setSelectedColor(7)} sx={{height: { xs: '8vh'}, width: { xs: '8vh'}, border: 7 === selectedColor ? 2 : 0 }}></Fab>
-                            <Fab color="blue" onClick={() => setSelectedColor(8)} sx={{height: { xs: '8vh'}, width: { xs: '8vh'}, border: 8 === selectedColor ? 2 : 0 }}></Fab>
+                            <Fab color="orange" onClick={() => setSelectedColor(5)} sx={{ height: { xs: '8vh' }, width: { xs: '8vh' }, border: 5 === selectedColor ? 2 : 0 }}></Fab>
+                            <Fab color="purple" onClick={() => setSelectedColor(6)} sx={{ height: { xs: '8vh' }, width: { xs: '8vh' }, border: 6 === selectedColor ? 2 : 0 }}></Fab>
+                            <Fab color="pink" onClick={() => setSelectedColor(7)} sx={{ height: { xs: '8vh' }, width: { xs: '8vh' }, border: 7 === selectedColor ? 2 : 0 }}></Fab>
+                            <Fab color="blue" onClick={() => setSelectedColor(8)} sx={{ height: { xs: '8vh' }, width: { xs: '8vh' }, border: 8 === selectedColor ? 2 : 0 }}></Fab>
                         </Box>
                     </Grid>
                     <Grid item xs={12}>

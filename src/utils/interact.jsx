@@ -1,35 +1,60 @@
-import Web3 from 'web3';
+import { Alchemy, Network } from "alchemy-sdk";
 import contractABI from '../assets/contractABI.json'
-const web3 = new Web3(window.ethereum);
+import { createAlchemyWeb3 } from "@alch/alchemy-web3";
+
 const contractAddress = '0x4B214177d0a205FAc8D3d2910146F7290bd619F5';
-const contract = new web3.eth.Contract(contractABI, contractAddress);
+const web3 = createAlchemyWeb3("https://eth-sepolia.g.alchemy.com/v2/MZOFtJq4vlHU3MlvX7nCWJjtvEijsfDw");
+const contract = await new web3.eth.Contract(contractABI, contractAddress);//loadContract();
+
+const settings = {
+  apiKey: 'MZOFtJq4vlHU3MlvX7nCWJjtvEijsfDw',
+  network: Network.ETH_SEPOLIA,
+};
+
+const alchemy = new Alchemy(settings);
 
 export const getAllPixels = async () => {
+
   try {
-    const pixels = await contract.methods.getAllPixels().call()
+    let tx = {
+      to: contractAddress,
+      data: contract.methods.getAllPixels().encodeABI(),
+    }
+    let pixels = await alchemy.core.call(tx)
+    let type = contract.methods.getAllPixels()._method.outputs[0].type
+    pixels = web3.eth.abi.decodeParameter(type, pixels)
     return pixels
   }
   catch (err) {
-    return {
-      address: "",
-      severity: "error",
-      status: "😥 " + err.message,
-    };
+    console.log(err)
   }
 }
 
+
 export const setPixelColor = async (x, y, color) => {
-  console.log(web3.currentProvider)
-  const sender = await getCurrentWalletConnected()
   try {
-     contract.methods.setPixelColorAdmin(x, y, color).send({ from: sender.address  })
-    .then(function(receipt){
-      console.log(receipt)
-  });
+    //Transaction set up
+    const transactionParameters = {
+      to: contractAddress,
+      from: window.ethereum.selectedAddress,
+      'data': contract.methods.setPixelColor(x, y, color).encodeABI() //make call to NFT smart contract 
+    };
+
+    //sign transaction via Metamask
+    const txHash = await window.ethereum
+      .request({
+        method: 'eth_sendTransaction',
+        params: [transactionParameters],
+      });
+    return {
+      success: true,
+      severity: "success",
+      status: "✅ Check out your transaction on Etherscan: https://sepolia.etherscan.io/tx/" + txHash
+    }
   }
   catch (err) {
     return {
-      address: "",
+      success: false,
       severity: "error",
       status: "😥 " + err.message,
     };
