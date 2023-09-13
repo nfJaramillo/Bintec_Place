@@ -1,6 +1,8 @@
 import { Alchemy, Network } from "alchemy-sdk";
 import contractABI from '../assets/contractABI.json'
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
+import { sendTransaction } from '@wagmi/core'
+
 
 const contractAddress = '0x4B214177d0a205FAc8D3d2910146F7290bd619F5';
 const web3 = createAlchemyWeb3("https://eth-sepolia.g.alchemy.com/v2/MZOFtJq4vlHU3MlvX7nCWJjtvEijsfDw");
@@ -14,7 +16,6 @@ const settings = {
 const alchemy = new Alchemy(settings);
 
 export const getAllPixels = async () => {
-
   try {
     let tx = {
       to: contractAddress,
@@ -31,25 +32,19 @@ export const getAllPixels = async () => {
 }
 
 
-export const setPixelColor = async (x, y, color) => {
+export const setPixelColor = async (x, y, color, address) => {
   try {
-    //Transaction set up
-    const transactionParameters = {
+    const  txHash  = await sendTransaction({
       to: contractAddress,
-      from: window.ethereum.selectedAddress,
-      'data': contract.methods.setPixelColor(x, y, color).encodeABI() //make call to NFT smart contract 
-    };
+      from: address,
+      'data': contract.methods.setPixelColorAdmin(x, y, color).encodeABI() //make call to NFT smart contract 
 
-    //sign transaction via Metamask
-    const txHash = await window.ethereum
-      .request({
-        method: 'eth_sendTransaction',
-        params: [transactionParameters],
-      });
+    })
+    console.log(txHash)
     return {
       success: true,
       severity: "success",
-      status: "✅ Check out your transaction on Etherscan: https://sepolia.etherscan.io/tx/" + txHash
+      status: "✅ Check out your transaction on Etherscan: https://sepolia.etherscan.io/tx/" + txHash.hash
     }
   }
   catch (err) {
@@ -62,81 +57,3 @@ export const setPixelColor = async (x, y, color) => {
 }
 
 
-export const connectWallet = async () => {
-  if (window.ethereum) {
-    try {
-      const addressArray = await window.ethereum.request({
-        method: "eth_requestAccounts",
-      });
-      const obj = {
-        status: "Billetera conectada"
-        ,
-        address: addressArray[0],
-      };
-      return obj;
-    } catch (err) {
-      return {
-        address: "",
-        severity: "error",
-        status: "😥 " + err.message,
-      };
-    }
-  } else {
-    return {
-      address: "",
-      severity: "warning",
-      status: (
-        <div>
-          {" "}
-          🦊{" "}
-          <a target="_blank" rel="noopener noreferrer" href={`https://metamask.io/download.html`}>
-            You must install Metamask, a virtual Ethereum wallet, in your
-            browser.
-          </a>
-        </div>
-      ),
-    };
-  }
-};
-
-export const getCurrentWalletConnected = async () => {
-  if (window.ethereum) {
-    try {
-      const addressArray = await window.ethereum.request({
-        method: "eth_accounts",
-      });
-      if (addressArray.length > 0) {
-        return {
-          address: addressArray[0],
-          status: "👆🏽 Write a message in the text-field above.",
-        };
-      } else {
-        return {
-          address: "",
-          status: "🦊 Connect to Metamask using the top right button.",
-        };
-      }
-    } catch (err) {
-      return {
-        address: "",
-        severity: "error",
-        status: "😥 " + err.message,
-      };
-    }
-  } else {
-    return {
-      address: "",
-      severity: "warning",
-      status: (
-        <div>
-          {" "}
-          🦊{" "}
-          <a target="_blank" rel="noopener noreferrer" href={`https://metamask.io/download.html`}>
-            You must install Metamask, a virtual Ethereum wallet, in your
-            browser.
-          </a>
-        </div>
-      ),
-    };
-  }
-};

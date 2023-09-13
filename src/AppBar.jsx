@@ -2,26 +2,14 @@ import * as React from 'react';
 import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Button, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import BancolombiaIcon from './/assets/logo.svg'
-import { connectWallet, getCurrentWalletConnected } from "./utils/interact.jsx";
-import { useEffect, useState, useContext } from "react";
-import { AppContext } from './App';
 import { useNavigate } from 'react-router-dom';
 import { NavLink as ReactNav } from 'react-router-dom'
+import { Web3Button } from '@web3modal/react'
 
 
 export function AppBarTop() {
 
-    // Se ejecuta cada vez que se renderiza y verifica la conexion con la billetera
-    useEffect(() => {
-        async function fetchWallet() {
-            const { address } = await getCurrentWalletConnected();
-            setWallet(address)
-            addWalletListener()
-        }
 
-        fetchWallet()
-
-    }, []);  
 
     // Lo siguientes 3 ajustes se pueden editar
     // Paginas que se muestran en el menu
@@ -34,16 +22,7 @@ export function AppBarTop() {
     const linkBase = 'Bintec-Place/'
 
     const navigate = useNavigate();
-    const [walletAddress, setWallet] = useState("");
-    const contextData = useContext(AppContext);
-    const connectWalletPressed = async () => {
-        const walletResponse = await connectWallet();
-        contextData.severity("success")
-        contextData.text(walletResponse.status)
-        contextData.show(true);
-        setWallet(walletResponse.address);
 
-    };
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const handleOpenNavMenu = (event) => {
@@ -53,38 +32,10 @@ export function AppBarTop() {
 
     const handleCloseNavMenu = (page) => {
         page = page.toLowerCase();
-        page = page.replace(" ","")
+        page = page.replace(" ", "")
         navigate(linkBase + page);
         setAnchorElNav(null);
     };
-
-    function addWalletListener() {
-
-
-        if (window.ethereum) {
-            window.ethereum.on("accountsChanged", (accounts) => {
-                if (accounts.length > 0) {
-                    setWallet(accounts[0]);
-                } else {
-                    setWallet("");
-                    contextData.severity("warning")
-                    contextData.text("🦊 Connect to Metamask using the top right button.")
-                    contextData.show(true);
-                }
-            });
-        } else {
-            contextData.severity("warning")
-            contextData.text(true);
-            contextData.show(
-                <div>
-                    🦊{" "}
-                    <a target="_blank" rel="noopener noreferrer" href={`https://metamask.io/download.html`}>
-                        Debes instalar Metamask en tu navegador
-                    </a>
-                </div>
-            );
-        }
-    }
 
     return (
         <AppBar position="static" sx={{ borderRadius: 1 }}>
@@ -92,7 +43,7 @@ export function AppBarTop() {
                 <Toolbar disableGutters>
                     <Box component="img" src={BancolombiaIcon} alt="Logo de Bancolombia" sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, maxWidth: 40 }} />
 
-                    <MenuItem onClick={() => handleCloseNavMenu("")} sx={{ display: { xs: 'none', md: 'flex' }}}>
+                    <MenuItem onClick={() => handleCloseNavMenu("")} sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <Typography
                             variant="h6"
                             noWrap
@@ -102,7 +53,7 @@ export function AppBarTop() {
                                 letterSpacing: '.3rem',
                                 color: 'inherit',
                                 textDecoration: 'none',
-                                '&:hover': {bgcolor: 'white', color: 'black'},
+                                '&:hover': { bgcolor: 'white', color: 'black' },
                                 borderRadius: 1
                             }}
                         >
@@ -146,8 +97,8 @@ export function AppBarTop() {
                             ))}
                         </Menu>
                     </Box>
-                    
-                  <Typography
+
+                    <Typography
                         variant="h5"
                         noWrap
                         component="a"
@@ -165,41 +116,26 @@ export function AppBarTop() {
                     >
                         {tituloResumido}
                     </Typography>
-                    <Box sx={{ flexGrow: 1, textAlign:'center', display: { xs: 'none', md: 'flex' } }}>
+                    <Box sx={{ flexGrow: 1, textAlign: 'center', display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
                             <Button
-                            component={ReactNav}
-                            to={linkBase+page.replace(" ","")}
+                                component={ReactNav}
+                                to={linkBase + page.replace(" ", "")}
                                 key={page}
                                 onClick={() => handleCloseNavMenu(page)}
-                                sx={{mr: 1, my: 2, color: 'white', active:'true', display: 'block', '&:hover': {bgcolor: 'white', color: 'black'},'&.active': {bgcolor: 'white', color: 'black'}}}
+                                sx={{ mr: 1, my: 2, color: 'white', active: 'true', display: 'block', '&:hover': { bgcolor: 'white', color: 'black' }, '&.active': { bgcolor: 'white', color: 'black' } }}
                             >
                                 {page}
                             </Button>
                         ))}
                     </Box>
 
-                    <Box sx={{ flexGrow: 0,  display: { xs: 'none', md: 'flex' }}}>
-                        <Button variant="contained" id="walletButton" onClick={connectWalletPressed} color="yellow" sx={{ backgroundColor: 'FCDB25' }}>
-                            {walletAddress.length > 0 ? (
-                                "Conectado: " +
-                                String(walletAddress).substring(0, 6) +
-                                "..." +
-                                String(walletAddress).substring(38)
-                            ) : (
-                                <span>Conectar Billetera</span>
-                            )}
-                        </Button>
+                    <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
+                        <Web3Button />
                     </Box>
 
-                    <Box sx={{ flexGrow: 0,  display: { xs: 'flex', md: 'none' }}}>
-                        <Button variant="contained" id="walletButton" onClick={connectWalletPressed} color="yellow" sx={{ backgroundColor: 'FCDB25' }}>
-                            {walletAddress.length > 0 ? (
-                                "Conectado"
-                            ) : (
-                                <span>Conectar</span>
-                            )}
-                        </Button>
+                    <Box sx={{ flexGrow: 0, display: { xs: 'flex', md: 'none' } }}>
+                        <Web3Button />
                     </Box>
 
                 </Toolbar>

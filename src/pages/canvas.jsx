@@ -4,9 +4,11 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import CheckIcon from '@mui/icons-material/Check';
 import { getAllPixels, setPixelColor } from "../utils/interact";
 import { AppContext } from '../App.jsx';
+import { useAccount } from 'wagmi'
 
 const Canvas = () => {
 
+    const { address} = useAccount()
     const contextData = useContext(AppContext);
     const rows = 30
     const columns = 50
@@ -44,7 +46,8 @@ const Canvas = () => {
     }
 
     const handleConfirmation = async () => {
-        let response = await setPixelColor(selectedIndex, selectedSubIndex, selectedColor)
+        console.log(address)
+        let response = await setPixelColor(selectedIndex, selectedSubIndex, selectedColor, address)
         contextData.severity(response.severity)
         contextData.text(response.status);
         contextData.show(true)
@@ -53,10 +56,10 @@ const Canvas = () => {
 
     return (
 
-        <Grid container direction={{ xs: 'column', md: 'row' }} maxWidth="xl" sx={{ justifyContent: 'center', display: 'flex', alignItems: 'center', minHeight: '85vh', width: '99vw', maxWidth: '100vw', bgcolor: '#cfe8fc', borderRadius: 1, mt: 3, background: '#f7f7f7' }}>
+        <Grid container direction={{ xs: 'column', md: 'row' }} maxWidth="xl" maxHeight={{xs:'200vh',md:'75vh'}} sx={{ justifyContent: 'center', display: 'flex', alignItems: 'center', minHeight: '75vh', width: '99vw', maxWidth: '100vw', bgcolor: '#cfe8fc', borderRadius: 1, mt: 3, background: '#f7f7f7' }}>
 
-            <Grid item xs={12} sm={8} >
-                <TransformWrapper initialScale={0.9} minScale={0.9} initialPositionX={50} initialPositionY={40} >
+            <Grid item xs={12} md={8} >
+                <TransformWrapper initialScale={0.9} minScale={0.9} initialPositionX={50} initialPositionY={25} >
                     <TransformComponent>
                         <Grid container direction='column' height={{ xs: '50vh', md: '80vh' }}>
                             {pixels.map((items, index) => {
@@ -98,7 +101,7 @@ const Canvas = () => {
                     </Grid>
                     <Grid item xs={12}>
                         <Box textAlign='center'>
-                            <Button variant="outlined" onClick={() => handleConfirmation()} startIcon={<CheckIcon />}>
+                            <Button disabled={address!=undefined?false:true} variant="outlined" onClick={() => handleConfirmation()} startIcon={<CheckIcon />}>
                                 Confirm
                             </Button>
                         </Box>
