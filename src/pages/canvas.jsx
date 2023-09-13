@@ -56,10 +56,10 @@ const Canvas = () => {
 
     return (
 
-        <Grid container direction={{ xs: 'column', md: 'row' }} maxWidth="xl" maxHeight={{xs:'200vh',md:'75vh'}} sx={{ justifyContent: 'center', display: 'flex', alignItems: 'center', minHeight: '75vh', width: '99vw', maxWidth: '100vw', bgcolor: '#cfe8fc', borderRadius: 1, mt: 3, background: '#f7f7f7' }}>
+        <Grid container direction={{ xs: 'column', md: 'row' }} maxWidth="xl" maxHeight={{xs:'200vh',md:'78vh'}} sx={{ justifyContent: 'center', display: 'flex', alignItems: 'center', minHeight: '78vh', width: '99vw', maxWidth: '100vw', bgcolor: '#cfe8fc', borderRadius: 1, mt: 3, background: '#f7f7f7' }}>
 
             <Grid item xs={12} md={8} >
-                <TransformWrapper initialScale={0.9} minScale={0.9} initialPositionX={50} initialPositionY={25} >
+                <TransformWrapper initialScale={0.9} minScale={0.9} initialPositionX={20} initialPositionY={25} >
                     <TransformComponent>
                         <Grid container direction='column' height={{ xs: '50vh', md: '80vh' }}>
                             {pixels.map((items, index) => {
