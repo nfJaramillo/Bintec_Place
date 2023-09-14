@@ -1,29 +1,22 @@
-import { Alchemy, Network } from "alchemy-sdk";
+
+import Web3 from 'web3';
 import contractABI from '../assets/contractABI.json'
-import { createAlchemyWeb3 } from "@alch/alchemy-web3";
-import { sendTransaction } from '@wagmi/core'
+import { sendTransaction, readContract  } from '@wagmi/core'
 
 
 const contractAddress = '0x4B214177d0a205FAc8D3d2910146F7290bd619F5';
-const web3 = createAlchemyWeb3("https://eth-sepolia.g.alchemy.com/v2/MZOFtJq4vlHU3MlvX7nCWJjtvEijsfDw");
-const contract = await new web3.eth.Contract(contractABI, contractAddress);//loadContract();
-
-const settings = {
-  apiKey: 'MZOFtJq4vlHU3MlvX7nCWJjtvEijsfDw',
-  network: Network.ETH_SEPOLIA,
-};
-
-const alchemy = new Alchemy(settings);
+const web3 = new Web3();
+const contract = new web3.eth.Contract(contractABI, contractAddress);
 
 export const getAllPixels = async () => {
   try {
-    let tx = {
-      to: contractAddress,
-      data: contract.methods.getAllPixels().encodeABI(),
-    }
-    let pixels = await alchemy.core.call(tx)
-    let type = contract.methods.getAllPixels()._method.outputs[0].type
-    pixels = web3.eth.abi.decodeParameter(type, pixels)
+
+    let pixels = await readContract({
+      address: contractAddress,
+      abi: contractABI,
+      functionName: 'getAllPixels',
+    })
+
     return pixels
   }
   catch (err) {
@@ -40,7 +33,6 @@ export const setPixelColor = async (x, y, color, address) => {
       'data': contract.methods.setPixelColorAdmin(x, y, color).encodeABI() //make call to NFT smart contract 
 
     })
-    console.log(txHash)
     return {
       success: true,
       severity: "success",

@@ -5,6 +5,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import { getAllPixels, setPixelColor } from "../utils/interact";
 import { AppContext } from '../App.jsx';
 import { useAccount } from 'wagmi'
+import { useWeb3Modal } from '@web3modal/react'
 
 const Canvas = () => {
 
@@ -30,12 +31,15 @@ const Canvas = () => {
     const [pixels, setPixels] = useState(Array(rows).fill().map(() =>
         Array(columns).fill(2)))
 
+        const { isOpen } = useWeb3Modal()
+
     useEffect(() => {
         async function fetchData() {
             setPixels(await getAllPixels())
 
         }
         fetchData()
+        console.log(isOpen)
 
     }, []);
 
@@ -46,7 +50,6 @@ const Canvas = () => {
     }
 
     const handleConfirmation = async () => {
-        console.log(address)
         let response = await setPixelColor(selectedIndex, selectedSubIndex, selectedColor, address)
         contextData.severity(response.severity)
         contextData.text(response.status);
@@ -81,8 +84,8 @@ const Canvas = () => {
 
             </Grid>
 
-            <Grid item xs={12} sm={4}>
-                <Grid container sx={{ justifyContent: 'center' }} spacing={1}>
+            <Grid item xs={12} sm={4}  display={{xs:isOpen?'none':'block', md:'block'}}>
+                <Grid container sx={{ justifyContent: 'center' }} spacing={3}>
                     <Grid item xs={12}>
                         <Box textAlign='center'>
                             <Fab color="black2" onClick={() => setSelectedColor(1)} sx={{ height: { xs: '8vh' }, width: { xs: '8vh' }, border: 1 === selectedColor ? 2 : 0 }}></Fab>
@@ -101,8 +104,8 @@ const Canvas = () => {
                     </Grid>
                     <Grid item xs={12}>
                         <Box textAlign='center'>
-                            <Button disabled={address!=undefined?false:true} variant="outlined" onClick={() => handleConfirmation()} startIcon={<CheckIcon />}>
-                                Confirm
+                            <Button disabled={address!=undefined && selectedIndex!=-1 && selectedSubIndex!=-1 && selectedColor!=-1?false:true} variant="outlined" onClick={() => handleConfirmation()} startIcon={<CheckIcon />}>
+                                Confirmar
                             </Button>
                         </Box>
                     </Grid>

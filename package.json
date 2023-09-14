@@ -11,23 +11,20 @@
     "host": "vite --host"
   },
   "dependencies": {
-    "@alch/alchemy-web3": "^1.4.7",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.13.4",
     "@web3modal/ethereum": "^2.7.1",
     "@web3modal/react": "^2.7.1",
-    "alchemy-sdk": "^2.10.0",
     "buffer": "^6.0.3",
     "events": "^3.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.12.0",
     "react-zoom-pan-pinch": "^3.1.0",
-    "use-debounce": "^9.0.4",
-    "viem": "^1.10.9",
-    "wagmi": "^1.4.1"
+    "wagmi": "^1.4.1",
+    "web3": "^4.1.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.37",

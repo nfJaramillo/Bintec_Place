@@ -3,7 +3,7 @@ import NFTlogo from '../assets/logo.svg'
 
 const Home = () => {
     return (
-        <Grid container direction={{xs: 'column', md: 'row' }} justifyContent="center"  maxWidth="xl" sx={{ display: 'flex', alignItems: 'center', bgcolor: '#cfe8fc', minHeight: '80vh', borderRadius: 1, mt: 3, background: 'linear-gradient(to bottom, #F8F8F8, #FFFFFF)' }}>
+        <Grid container direction={{xs: 'column', md: 'row' }} spacing="10" justifyContent="center"  maxWidth="xl" sx={{ display: 'flex', alignItems: 'center', bgcolor: '#cfe8fc', minHeight: '80vh', borderRadius: 1, mt: 3, background: 'linear-gradient(to bottom, #F8F8F8, #FFFFFF)' }}>
             <Grid item xs={6} >
                 <Typography sx={{ mt: 3, display: 'flex', alignItems: 'center', ml: 3, typography: {xs: 'h5', sm: 'h5', md:'h3', lg:'h3'  } }}>Frontend base</Typography>
                 <Typography variant="h5" sx={{ mt: 3, display: 'flex', alignItems: 'center', ml: 3 }}>Utiliza esta base para tus desarrollos Blockchain </Typography>
