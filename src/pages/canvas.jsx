@@ -1,4 +1,4 @@
-import { Grid, Button, Fab, Box } from "@mui/material"
+import { Grid, Button, Fab, Box, Typography } from "@mui/material"
 import { useEffect, useState, useContext } from "react"
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import CheckIcon from '@mui/icons-material/Check';
@@ -6,10 +6,11 @@ import { getAllPixels, setPixelColor } from "../utils/interact";
 import { AppContext } from '../App.jsx';
 import { useAccount } from 'wagmi'
 import { useWeb3Modal } from '@web3modal/react'
+import CircleIcon from '@mui/icons-material/Circle';
 
 const Canvas = () => {
 
-    const { address} = useAccount()
+    const { address } = useAccount()
     const contextData = useContext(AppContext);
     const rows = 30
     const columns = 50
@@ -31,7 +32,7 @@ const Canvas = () => {
     const [pixels, setPixels] = useState(Array(rows).fill().map(() =>
         Array(columns).fill(2)))
 
-        const { isOpen } = useWeb3Modal()
+    const { isOpen } = useWeb3Modal()
 
     useEffect(() => {
         async function fetchData() {
@@ -59,12 +60,21 @@ const Canvas = () => {
 
     return (
 
-        <Grid container direction={{ xs: 'column', md: 'row' }} maxWidth="xl" maxHeight={{xs:'200vh',md:'78vh'}} sx={{ justifyContent: 'center', display: 'flex', alignItems: 'center', minHeight: '78vh', width: '99vw', maxWidth: '100vw', bgcolor: '#cfe8fc', borderRadius: 1, mt: 3, background: '#f7f7f7' }}>
+        <Grid container direction={{ xs: 'column', md: 'row' }} maxWidth="xl" maxHeight={{ xs: '200vh', md: '78vh' }} sx={{ justifyContent: 'center', display: 'flex', alignItems: 'center', minHeight: '78vh', width: '99vw', maxWidth: { xs: '96vw', md: '100vw' }, bgcolor: '#cfe8fc', borderRadius: 1, mt: 3, background: { xs: 'linear-gradient(to bottom, #F8F8F8, #FFFFFF)', md: '#f7f7f7' } }}>
 
-            <Grid item xs={12} md={8} >
-                <TransformWrapper initialScale={0.9} minScale={0.9} initialPositionX={20} initialPositionY={25} >
+            <Grid item xs={3} display={{ xs: 'block', md: 'none' }}>
+                <Box textAlign='center'>
+                    <Typography variant="h5">Instrucciones</Typography>
+                    <Typography variant="h6"><CircleIcon sx={{ height: '1vh', verticalAlign: "middle" }} /> Conéctate con Metamask</Typography>
+                    <Typography variant="h6"><CircleIcon sx={{ height: '1vh', verticalAlign: "middle" }} />Selecciona un pixel y un color</Typography>
+                    <Typography variant="h6"><CircleIcon sx={{ height: '1vh', verticalAlign: "middle" }} />Confirma</Typography>
+                </Box>
+            </Grid>
+
+            <Grid item xs={4} md={8} maxwidth={'1000'} >
+                <TransformWrapper initialScale={0.9} minScale={0.9} initialPositionX={20} initialPositionY={25}  >
                     <TransformComponent>
-                        <Grid container direction='column' height={{ xs: '50vh', md: '80vh' }}>
+                        <Grid container direction='column' height={{ xs: '30vh', md: '80vh' }}>
                             {pixels.map((items, index) => {
                                 return (
                                     <Grid item key={index} height={{ xs: '0.7vh', md: '2.5vh' }}>
@@ -84,8 +94,16 @@ const Canvas = () => {
 
             </Grid>
 
-            <Grid item xs={12} sm={4}  display={{xs:isOpen?'none':'block', md:'block'}}>
+            <Grid item xs={8} md={4} display={{ xs: isOpen ? 'none' : 'block', md: 'block' }}>
                 <Grid container sx={{ justifyContent: 'center' }} spacing={3}>
+                    <Grid item xs={12} display={{ xs: 'none', md: 'block' }}>
+                        <Box textAlign='center'>
+                            <Typography variant="h4">Instrucciones</Typography>
+                            <Typography variant="h5"><CircleIcon sx={{ height: '1vh', verticalAlign: "middle" }} /> Conéctate con Metamask</Typography>
+                            <Typography variant="h5"><CircleIcon sx={{ height: '1vh', verticalAlign: "middle" }} />Selecciona un pixel y un color</Typography>
+                            <Typography variant="h5"><CircleIcon sx={{ height: '1vh', verticalAlign: "middle" }} />Confirma</Typography>
+                        </Box>
+                    </Grid>
                     <Grid item xs={12}>
                         <Box textAlign='center'>
                             <Fab color="black2" onClick={() => setSelectedColor(1)} sx={{ height: { xs: '8vh' }, width: { xs: '8vh' }, border: 1 === selectedColor ? 2 : 0 }}></Fab>
@@ -104,7 +122,7 @@ const Canvas = () => {
                     </Grid>
                     <Grid item xs={12}>
                         <Box textAlign='center'>
-                            <Button disabled={address!=undefined && selectedIndex!=-1 && selectedSubIndex!=-1 && selectedColor!=-1?false:true} variant="outlined" onClick={() => handleConfirmation()} startIcon={<CheckIcon />}>
+                            <Button disabled={address != undefined && selectedIndex != -1 && selectedSubIndex != -1 && selectedColor != -1 ? false : true} variant="outlined" onClick={() => handleConfirmation()} startIcon={<CheckIcon />}>
                                 Confirmar
                             </Button>
                         </Box>

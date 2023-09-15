@@ -3,14 +3,14 @@ import NFTlogo from '../assets/logo.svg'
 
 const Home = () => {
     return (
-        <Grid container direction={{xs: 'column', md: 'row' }} spacing="10" justifyContent="center"  maxWidth="xl" sx={{ display: 'flex', alignItems: 'center', bgcolor: '#cfe8fc', minHeight: '80vh', borderRadius: 1, mt: 3, background: 'linear-gradient(to bottom, #F8F8F8, #FFFFFF)' }}>
+        <Grid container direction={{xs: 'column-reverse', md: 'row' }} alignItems={'center'} justifyContent={'center'} maxWidth="xl" sx={{  bgcolor: '#cfe8fc', minHeight: '80vh', borderRadius: 1, mt: 3, background: 'linear-gradient(to bottom, #F8F8F8, #FFFFFF)' }}>
             <Grid item xs={6} >
-                <Typography sx={{ mt: 3, display: 'flex', alignItems: 'center', ml: 3, typography: {xs: 'h5', sm: 'h5', md:'h3', lg:'h3'  } }}>Frontend base</Typography>
-                <Typography variant="h5" sx={{ mt: 3, display: 'flex', alignItems: 'center', ml: 3 }}>Utiliza esta base para tus desarrollos Blockchain </Typography>
+                <Typography textAlign={{xs: 'center', md: 'left' }} sx={{ mt: 3, ml: 3, typography: {xs: 'h4', md:'h3'  } }}>Bintec place</Typography>
+                <Typography textAlign={{xs: 'center', md: 'left' }} variant="h5" sx={{ mt: 3,   ml: 3 }}>Deja tu huella en el lienzo descentralizado de la feria</Typography>
             </Grid>
-            <Grid item xs={6} container alignItems="center" justifyContent="center">
-                <Box component="img"
-                    sx={{maxHeight: { xs: 233, md: 400 }}}
+            <Grid  item xs={6} container  alignItems={'center'} justifyContent={'center'} >
+                <Box component="img" 
+                    sx={{maxHeight: { xs: 200, md: 400 }}}
                     alt="Logo"
                     src={NFTlogo}
                 />
