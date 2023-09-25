@@ -64,7 +64,7 @@ const Canvas = () => {
 
             <Grid item xs={3} display={{ xs: 'block', md: 'none' }}>
                 <Box textAlign='center'>
-                    <Typography variant="h5">Instrucciones</Typography>
+                    <Typography variant="h5"><CircleIcon sx={{ height: '1vh', verticalAlign: "middle", visibility:'hidden' }} />Instrucciones</Typography>
                     <Typography variant="h6"><CircleIcon sx={{ height: '1vh', verticalAlign: "middle" }} /> Conéctate con Metamask</Typography>
                     <Typography variant="h6"><CircleIcon sx={{ height: '1vh', verticalAlign: "middle" }} />Selecciona un pixel y un color</Typography>
                     <Typography variant="h6"><CircleIcon sx={{ height: '1vh', verticalAlign: "middle" }} />Confirma</Typography>
@@ -98,7 +98,7 @@ const Canvas = () => {
                 <Grid container sx={{ justifyContent: 'center' }} spacing={3}>
                     <Grid item xs={12} display={{ xs: 'none', md: 'block' }}>
                         <Box textAlign='center'>
-                            <Typography variant="h4">Instrucciones</Typography>
+                            <Typography variant="h4"><CircleIcon sx={{ height: '1vh', verticalAlign: "middle", visibility:'hidden' }} />Instrucciones</Typography>
                             <Typography variant="h5"><CircleIcon sx={{ height: '1vh', verticalAlign: "middle" }} /> Conéctate con Metamask</Typography>
                             <Typography variant="h5"><CircleIcon sx={{ height: '1vh', verticalAlign: "middle" }} />Selecciona un pixel y un color</Typography>
                             <Typography variant="h5"><CircleIcon sx={{ height: '1vh', verticalAlign: "middle" }} />Confirma</Typography>
