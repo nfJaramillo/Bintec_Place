@@ -1,4 +1,4 @@
-import { Grid, Button, Fab, Box, Typography } from "@mui/material"
+import { Grid, Button, Fab, Box, Typography, Dialog } from "@mui/material"
 import { useEffect, useState, useContext } from "react"
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import CheckIcon from '@mui/icons-material/Check';
@@ -17,6 +17,7 @@ const Canvas = () => {
     const [selectedIndex, setSelectedIndex] = useState(-1)
     const [selectedSubIndex, setSelectedSubIndex] = useState(-1)
     const [selectedColor, setSelectedColor] = useState(-1)
+    const [open, setOpen] = useState(false);
     const Colors = {
         0: '#ffffff',
         1: '#2c2a29',
@@ -57,48 +58,51 @@ const Canvas = () => {
         contextData.show(true)
     }
 
-
     return (
 
         <Grid container direction={{ xs: 'column', md: 'row' }} maxWidth="xl" maxHeight={{ xs: '200vh', md: '78vh' }} sx={{ justifyContent: 'center', display: 'flex', alignItems: 'center', minHeight: '78vh', width: '99vw', maxWidth: { xs: '96vw', md: '100vw' }, bgcolor: '#cfe8fc', borderRadius: 1, mt: 3, background: { xs: 'linear-gradient(to bottom, #F8F8F8, #FFFFFF)', md: '#f7f7f7' } }}>
 
-            <Grid item xs={3} display={{ xs: 'block', md: 'none' }}>
+            <Grid item xs={2} display={{ xs: 'block', md: 'none' }} sx={{ mt: 3, mb: 3 }}>
                 <Box textAlign='center'>
-                    <Typography variant="h5"><CircleIcon sx={{ height: '1vh', verticalAlign: "middle", visibility:'hidden' }} />Instrucciones</Typography>
-                    <Typography variant="h6"><CircleIcon sx={{ height: '1vh', verticalAlign: "middle" }} /> Conéctate con Metamask</Typography>
-                    <Typography variant="h6"><CircleIcon sx={{ height: '1vh', verticalAlign: "middle" }} />Selecciona un pixel y un color</Typography>
-                    <Typography variant="h6"><CircleIcon sx={{ height: '1vh', verticalAlign: "middle" }} />Confirma</Typography>
+                    <Button variant="contained" onClick={() => setOpen(true)} color='yellow'>
+                        Instrucciones
+                    </Button>
                 </Box>
             </Grid>
 
-            <Grid item xs={4} md={8} maxwidth={'1000'} >
+            <Dialog open={open} onClose={() => setOpen(false)}>
+                <Box textAlign='center'>
+                    <Typography variant="h5" sx={{ m: 1 }}><CircleIcon sx={{ height: '1vh', verticalAlign: "middle", visibility: 'hidden' }} />Instrucciones</Typography>
+                    <Typography variant="h6" sx={{ m: 1 }}><CircleIcon sx={{ height: '1vh', verticalAlign: "middle" }} />Conéctate con Metamask en el botón azul en la esquina superior derecha</Typography>
+                    <Typography variant="h6" sx={{ m: 1 }}><CircleIcon sx={{ height: '1vh', verticalAlign: "middle" }} />Selecciona un pixel y un color</Typography>
+                    <Typography variant="h6" sx={{ m: 1 }}><CircleIcon sx={{ height: '1vh', verticalAlign: "middle" }} />Confirma en el botón al final de la página</Typography>
+                </Box>
+            </Dialog>
+
+            <Grid item xs={4} md={8} maxwidth={'1000'}  >
                 <TransformWrapper initialScale={0.9} minScale={0.9} initialPositionX={20} initialPositionY={25}  >
                     <TransformComponent>
-                        <Grid container direction='column' height={{ xs: '30vh', md: '80vh' }}>
-                            {pixels.map((items, index) => {
-                                return (
-                                    <Grid item key={index} height={{ xs: '0.7vh', md: '2.5vh' }}>
-                                        {items.map((pixelColor, sIndex) => {
-                                            return (
-                                                <Button onClick={() => handlePixelClick(index, sIndex)} key={sIndex} sx={{ border: index === selectedIndex && sIndex === selectedSubIndex ? 1 : 0, padding: 0, minWidth: { xs: '0.7vh', md: '2.5vh' }, minHeight: { xs: '0.7vh', md: '2.5vh' }, backgroundColor: Colors[pixelColor], borderRadius: 0, '&:hover': { border: 1, backgroundColor: Colors[pixelColor] } }}>
-                                                </Button>
+                        <Grid container wrap="nowrap" direction='column' height={{ xs: '40vh', md: '80vh' }} >
+                            {pixels.map((items, index) => (
+                                <Grid item key={index} height={{ xs: '0.7vh',sm:'1.3vh', md: '1.6vh', lg:'2.2vh', xl:'2.5vh' }}>
+                                    {items.map((pixelColor, sIndex) => (
 
-                                            )
-                                        })}
-                                    </Grid>
-                                );
-                            })}
+                                        <Button onClick={() => handlePixelClick(index, sIndex)} key={sIndex} sx={{ border: index === selectedIndex && sIndex === selectedSubIndex ? 1 : 0, padding: 0, minWidth: { xs: '0.7vh', sm:'1.3vh', md: '1.6vh', lg:'2.2vh', xl:'2.5vh'  }, minHeight: { xs: '0.7vh', sm:'1.3vh', md: '1.6vh', lg:'2.2vh', xl:'2.5vh'  }, backgroundColor: Colors[pixelColor], borderRadius: 0, '&:hover': { border: 1, backgroundColor: Colors[pixelColor] } }}>
+                                        </Button>
+                                    ))}
+                                </Grid>
+                            ))}
                         </Grid>
                     </TransformComponent>
                 </TransformWrapper>
 
             </Grid>
 
-            <Grid item xs={8} md={4} display={{ xs: isOpen ? 'none' : 'block', md: 'block' }}>
+            <Grid item xs={6} md={4} display={{ xs: isOpen ? 'none' : 'block', md: 'block' }} sx={{ mt: { xs: 3, md: 0 } }}>
                 <Grid container sx={{ justifyContent: 'center' }} spacing={3}>
                     <Grid item xs={12} display={{ xs: 'none', md: 'block' }}>
                         <Box textAlign='center'>
-                            <Typography variant="h4"><CircleIcon sx={{ height: '1vh', verticalAlign: "middle", visibility:'hidden' }} />Instrucciones</Typography>
+                            <Typography variant="h4"><CircleIcon sx={{ height: '1vh', verticalAlign: "middle", visibility: 'hidden' }} />Instrucciones</Typography>
                             <Typography variant="h5"><CircleIcon sx={{ height: '1vh', verticalAlign: "middle" }} /> Conéctate con Metamask</Typography>
                             <Typography variant="h5"><CircleIcon sx={{ height: '1vh', verticalAlign: "middle" }} />Selecciona un pixel y un color</Typography>
                             <Typography variant="h5"><CircleIcon sx={{ height: '1vh', verticalAlign: "middle" }} />Confirma</Typography>
@@ -122,7 +126,7 @@ const Canvas = () => {
                     </Grid>
                     <Grid item xs={12}>
                         <Box textAlign='center'>
-                            <Button disabled={address != undefined && selectedIndex != -1 && selectedSubIndex != -1 && selectedColor != -1 ? false : true} variant="outlined" onClick={() => handleConfirmation()} startIcon={<CheckIcon />}>
+                            <Button variant='contained' color='green' disabled={address != undefined && selectedIndex != -1 && selectedSubIndex != -1 && selectedColor != -1 ? false : true} onClick={() => handleConfirmation()} startIcon={<CheckIcon />}>
                                 Confirmar
                             </Button>
                         </Box>

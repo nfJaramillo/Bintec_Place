@@ -13,13 +13,13 @@ export function AppBarTop() {
 
     // Lo siguientes 3 ajustes se pueden editar
     // Paginas que se muestran en el menu
-    const pages = ['Canvas'];
+    const pages = ['Lienzo', 'Certificado'];
     // Titulo que se muestra cuando el tamaño de pantalla es de un computador
-    const titulo = 'BINTEC PLACE'
+    const titulo = 'BLOCKCHAIN FOR BINTEC'
     // Titulo que se muestra cuando el tamaño de pantalla es de un celular
-    const tituloResumido = 'Bintec'
+    const tituloResumido = 'B4B'
     // Link base de la pagina que debe ser igual al estipulado en App.jsx
-    const linkBase = 'Bintec-Place/'
+    const linkBase = 'Bintec4Bintec/'
 
     const navigate = useNavigate();
 

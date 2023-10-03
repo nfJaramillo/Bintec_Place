@@ -7,6 +7,7 @@ import { AppBarTop } from './AppBar';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/home'
 import Canvas from './pages/canvas';
+import Certificado from './pages/certificado'
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 import { Web3Modal } from '@web3modal/react'
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
@@ -53,9 +54,10 @@ const App = () => {
           <div className="App">
             <AppBarTop></AppBarTop>
             <Routes>
-              <Route exact path="Bintec-Place/Canvas" element={<Canvas />} />
-              <Route exact path="Bintec-Place/" element={<Home />} />
-              <Route exact path="*" element={<Navigate to='Bintec-Place/' />} />
+            <Route exact path="Bintec4Bintec/Certificado" element={<Certificado />} />
+              <Route exact path="Bintec4Bintec/Lienzo" element={<Canvas />} />
+              <Route exact path="Bintec4Bintec/" element={<Home />} />
+              <Route exact path="*" element={<Navigate to='Bintec4Bintec/' />} />
             </Routes>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
               <Alert onClose={handleClose} severity={alertSeverity} sx={{ width: '100%' }}>
