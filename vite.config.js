@@ -4,6 +4,7 @@ import eslint from 'vite-plugin-eslint';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/Bintec4Bintec/',
   plugins: [react(), eslint()],
   define: {
     global: {},
