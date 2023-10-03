@@ -5,8 +5,7 @@ import eslint from 'vite-plugin-eslint';
 // https://vitejs.dev/config/
 export default defineConfig({
   base: '/Blockchain4Bintec/',
-main
-: [react(), eslint()],
+  plugins: [react(), eslint()],
   define: {
     global: {},
     "process.env": {}
