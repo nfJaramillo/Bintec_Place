@@ -1,12 +1,15 @@
 
 import Web3 from 'web3';
 import contractABI from '../assets/contractABI.json'
+import contractABI2 from '../assets/contractABI2.json'
 import { sendTransaction, readContract  } from '@wagmi/core'
 
 
 const contractAddress = '0x4B214177d0a205FAc8D3d2910146F7290bd619F5';
+const contractAddress2 = '0x9D4cCb21b17658A7E3220933EE3BeC839f80403c';
 const web3 = new Web3();
 const contract = new web3.eth.Contract(contractABI, contractAddress);
+const contract2 = new web3.eth.Contract(contractABI2, contractAddress2);
 
 export const getAllPixels = async () => {
   try {
@@ -48,4 +51,27 @@ export const setPixelColor = async (x, y, color, address) => {
   }
 }
 
+export const getNFT = async (address) => {
+
+  try {
+    const  txHash  = await sendTransaction({
+      to: contractAddress2,
+      from: address,
+      'data': contract2.methods.purchase(6,1).encodeABI() //make call to NFT smart contract 
+
+    })
+
+    return {
+      success: true,
+      severity: "success",
+      status: "✅ Check out your transaction on Etherscan: https://sepolia.etherscan.io/tx/" + txHash.hash
+    }
+  } catch (error) {
+    return {
+      success: false,
+      severity: "error",
+      status: "😥 Something went wrong: " + error.message
+    }
+  }
+}
 
