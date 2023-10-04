@@ -34,16 +34,19 @@ const Canvas = () => {
         Array(columns).fill(2)))
 
     const { isOpen } = useWeb3Modal()
+    const [time, setTime] = useState(Date.now());
 
     useEffect(() => {
         async function fetchData() {
             setPixels(await getAllPixels())
 
         }
+        const interval = setInterval(() => setTime(Date.now()), 10000);
         fetchData()
-        console.log(isOpen)
-
-    }, []);
+        return () => {
+          clearInterval(interval);
+        };
+    }, [time]);
 
     const handlePixelClick = (index, sIndex) => {
         setSelectedIndex(index)
