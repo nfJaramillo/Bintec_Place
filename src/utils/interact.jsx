@@ -33,7 +33,7 @@ export const setPixelColor = async (x, y, color, address) => {
     const  txHash  = await sendTransaction({
       to: contractAddress,
       from: address,
-      'data': contract.methods.setPixelColorAdmin(x, y, color).encodeABI() //make call to NFT smart contract 
+      'data': contract.methods.setPixelColor(x, y, color,0).encodeABI() //make call to NFT smart contract 
 
     })
     return {
