@@ -54,10 +54,10 @@ const App = () => {
           <div className="App">
             <AppBarTop></AppBarTop>
             <Routes>
-            <Route exact path="Bintec4Bintec/Certificado" element={<Certificado />} />
-              <Route exact path="Bintec4Bintec/Lienzo" element={<Canvas />} />
-              <Route exact path="Bintec4Bintec/" element={<Home />} />
-              <Route exact path="*" element={<Navigate to='Bintec4Bintec/' />} />
+            <Route exact path="Blockchain4Bintec/Certificado" element={<Certificado />} />
+              <Route exact path="Blockchain4Bintec/Lienzo" element={<Canvas />} />
+              <Route exact path="Blockchain4Bintec/" element={<Home />} />
+              <Route exact path="*" element={<Navigate to='Blockchain4Bintec/' />} />
             </Routes>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
               <Alert onClose={handleClose} severity={alertSeverity} sx={{ width: '100%' }}>
