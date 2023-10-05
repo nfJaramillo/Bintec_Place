@@ -14,8 +14,8 @@ contract Bintec_Place is AccessControl {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
-    function setPixelColor( uint256 x,uint256 y,uint color ) public {
-        require(_times[msg.sender] + 300 < block.timestamp, "Espera...");
+    function setPixelColor( uint256 x,uint256 y,uint color, uint time ) public {
+        require(_times[msg.sender] + time < block.timestamp, "Espera...");
         _pixels[x][y] = color;
         _times[msg.sender] = block.timestamp;
     }
