@@ -39,14 +39,14 @@ export const setPixelColor = async (x, y, color, address) => {
     return {
       success: true,
       severity: "success",
-      status: "✅ Check out your transaction on Etherscan: https://sepolia.etherscan.io/tx/" + txHash.hash
+      status: "✅ Consulte su transacción en Etherscan: https://sepolia.etherscan.io/tx/" + txHash.hash
     }
   }
   catch (err) {
     return {
       success: false,
       severity: "error",
-      status: "😥 " + err.message,
+      status: "😥 Algo salió mal:" + err.message,
     };
   }
 }
@@ -64,13 +64,13 @@ export const getNFT = async (address) => {
     return {
       success: true,
       severity: "success",
-      status: "✅ Check out your transaction on Etherscan: https://sepolia.etherscan.io/tx/" + txHash.hash
+      status: "✅ Consulte su transacción en Etherscan: https://sepolia.etherscan.io/tx/" + txHash.hash
     }
   } catch (error) {
     return {
       success: false,
       severity: "error",
-      status: "😥 Something went wrong: " + error.message
+      status: "😥 Algo salió mal: " + error.message
     }
   }
 }
