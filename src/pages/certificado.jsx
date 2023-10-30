@@ -28,7 +28,7 @@ const Home = () => {
             </Grid>
             <Grid item xs={6} container alignItems={'center'} justifyContent={'center'} sx={{mt:{xs:5,md:0}}} >
                 <Box textAlign='center'>
-                    <Button variant="contained" color='yellow' onClick={() => getCertification()} sx={{width:{xs:'60vw',md:'30vw'}, height:{xs:'20vh',md:'20vh'}}}>
+                    <Button variant="contained" color='yellow' disabled={address != undefined ? false : true} onClick={() => getCertification()} sx={{width:{xs:'60vw',md:'30vw'}, height:{xs:'20vh',md:'20vh'}}}>
                     <Typography textAlign='center' sx={{  typography: { xs: 'h4', md: 'h3' } }}>Reclamar NFT</Typography>
                     </Button>
                 </Box>
