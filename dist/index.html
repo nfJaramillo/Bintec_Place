@@ -5,10 +5,24 @@
     <link rel="icon" type="image/svg+xml" href="/Blockchain4Bintec/assets/logo-40e61f4d.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blockchain 4 Bintec</title>
-    <script type="module" crossorigin src="/Blockchain4Bintec/assets/index-2e69561f.js"></script>
+    <script type="module" crossorigin src="/Blockchain4Bintec/assets/index-462701dd.js"></script>
   </head>
   <body>
     <div id="root"></div>
     
+    <script type="text/javascript">
+      (function(l) {
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location))
+    </script>
   </body>
 </html>
+
+
