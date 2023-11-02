@@ -57,7 +57,7 @@ export const getNFT = async (address) => {
     const  txHash  = await sendTransaction({
       to: contractAddress2,
       from: address,
-      'data': contract2.methods.purchase(7,1).encodeABI() //make call to NFT smart contract 
+      'data': contract2.methods.purchase(15,1).encodeABI() //make call to NFT smart contract 
 
     })
 
