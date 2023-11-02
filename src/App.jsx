@@ -60,7 +60,7 @@ const App = () => {
               <Route exact path="*" element={<Navigate to='Blockchain4Bintec/' />} />
             </Routes>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-              <Alert onClose={handleClose} severity={alertSeverity} sx={{ width: '100%' }}>
+              <Alert onClose={handleClose} severity={alertSeverity} sx={{ width: '87vw' }}>
                 {alertText}
               </Alert>
             </Snackbar>
